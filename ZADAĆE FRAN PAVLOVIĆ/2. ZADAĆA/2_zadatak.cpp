@@ -44,19 +44,19 @@ void proc(int i, int j){
 }
 
 void brisi(){
-	shmdt(PRAVO); 
+	shmdt(PRAVO); //shmdt odspaja segmente
 	shmdt(ZASTAVICA);
 
-	shmctl(pravoId, IPC_RMID, NULL); 
+	shmctl(pravoId, IPC_RMID, NULL); //shmctl brise
 	shmctl(zastavicaId, IPC_RMID, NULL);
 
 	exit(0);
 }
 void main(){
 	
-        pravoId = shmget(IPC_PRIVATE, sizeof(int), IPC_CREAT | 0660); 
+        pravoId = shmget(IPC_PRIVATE, sizeof(int), IPC_CREAT | 0660); //shmget kreira segmente zajednicke memorije 
         zastavicaId = shmget(IPC_PRIVATE, sizeof(int) * 2, IPC_CREAT | 0660);
-        PRAVO = (int*)shmat(pravoId, NULL, 0);
+        PRAVO = (int*)shmat(pravoId, NULL, 0); //shmat dodijeljuje adresni prostor i povezuje segmente
         ZASTAVICA = (int*)shmat(zastavicaId, NULL, 0);
 
 
